@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+.hero {
+  background-color: #171a29;
+  padding: 80px 0; 
+}
+
+.hero h1 {
+  color: #fff;
+}
+
+.hero p {
+  color: #ddd;
+  line-height: 1.5;
+}
+
+.hero img {
+ width: 400px;
+ height: 400px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  display: flex;
+  width: calc(400px * 5); 
+  animation: scroll 20s linear infinite;
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.login-page{
+  width: 50rem;
+}
+.navigation {
+  border-left: 10px solid #171a29;
+  transition: 0.5s;
+  overflow: hidden;
+}
+.navigation.active {
+  width: 80px;
+}
+.navigation ul li {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+.navigation ul li a {
+  display: flex;
+}
+.navigation ul li:hover,
+.navigation ul li.hovered {
+  background-color: white;
+}
+.navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: #a200ff;
+}
+.navigation ul li a .icon {
+  position: relative;
+  display: flex ;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+}
+.navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color:transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px white;
+  pointer-events: none;
+}
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px white;
+  pointer-events: none;
+}
+.close-icon{
+  margin-top: -4.1rem;
+}
+.top-bar{
+  padding: 0 100px;
+}
+.main-dash{
+  width: calc(100% - 300px);
+  left: 300px;
+  min-height: 100vh;
+  transition: .5s;
+}
+.main-dash-act{
+  width:calc(100% - 40px);
+  left:40px;
+  transition: .5s;
+}
+.statics{
+  display: flex;
+  max-width: 50rem;
+  transition: .5s;
+}
+.new-students-table{
+  width: 40rem;
+}
+.new-students-table-active{
+  width: 36rem;
+}
+.profile-card{
+  margin-left: 68rem;
+}
+.notice-tit {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid rgb(255, 255, 255); /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+ /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: rgb(255, 255, 255); }
+}
+.up-input{
+  width: 28rem;
+}
+.newlink{
+  width: 20rem;
+}
+.note{
+  width: 21rem;
+  margin-left: 15.6px;
+}
+.notice-active{
+  transition: .5s;
+}
+.inputs-update{
+  transition: .5s;
+}
+ .notice-sett{
+  transition: .5s;
+ }
+ .notice-sett-act{
+  transition:.5s
+ }
+ .settigns-list-active{
+  width: 30rem;
+  font-size:10px;
+  transition: .5s;
+ }
+ .allcorses{
+  transition: 0.5s;
+  width:60rem;
+ }
+.allcorses-act{
+  transition: 0.5s;
+ margin-left: 21rem;
+ width: 50rem;
+}
+.onecorse-cont{
+  height:50rem;
+ }
+ .enroll{
+  background: transparent;
+  max-height: 30rem;
+  margin-top: 0.7rem;
+  position: absolute;
+  margin-left: 61.5rem;
+ }

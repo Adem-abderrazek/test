@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or "mysql", "sqlite", etc.
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  password       String
+  name           String?
+  createdAt      DateTime         @default(now())
+  orders         Order[]          @relation("UserOrders")
+  favorisLists   FavorisList[]    @relation("UserFavoris")
+  reviews        Review[]
+  wishlists      Wishlist[]
+  shoppingCart   ShoppingCart[]
+  transactions   Transaction[]
+  gameKeys       GameKey[]
+  userProfile    UserProfile?
+  notifications  Notification[]
+  subscriptions  Subscription[]
+}
+
+model Game {
+  id             Int              @id @default(autoincrement())
+  title          String
+  description    String
+  price          Float
+  releaseDate    DateTime
+  categories     Category[]       @relation("GameCategories")
+  tags           Tag[]            @relation("GameTags")
+  orderItems     OrderItems[]
+  reviews        Review[]
+  favorisLists   FavorisList[]
+  wishlists      Wishlist[]
+  ShoppingCart ShoppingCart[]
+}
+model Order {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  totalAmount    Float
+  status         String
+  createdAt      DateTime         @default(now())
+  orderItems     OrderItems[]
+  user           User             @relation("UserOrders", fields: [userId], references: [id])
+  transaction    Transaction?
+}
+
+model OrderItems {
+  id             Int              @id @default(autoincrement())
+  orderId        Int
+  gameId         Int
+  quantity       Int
+  order          Order            @relation(fields: [orderId], references: [id])
+  game           Game             @relation(fields: [gameId], references: [id])
+  gameKey        GameKey?
+}
+
+model FavorisList {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  gameId         Int
+  user           User             @relation("UserFavoris", fields: [userId], references: [id])
+  game           Game             @relation(fields: [gameId], references: [id])
+}
+
+model Review {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  gameId         Int
+  rating         Int
+  comment        String?
+  createdAt      DateTime         @default(now())
+  user           User             @relation(fields: [userId], references: [id])
+  game           Game             @relation(fields: [gameId], references: [id])
+}
+
+model Category {
+  id             Int              @id @default(autoincrement())
+  name           String
+  description    String?
+  games          Game[]           @relation("GameCategories")
+}
+
+model Tag {
+  id             Int              @id @default(autoincrement())
+  name           String
+  games          Game[]           @relation("GameTags")
+}
+
+model Wishlist {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  gameId         Int
+  user           User             @relation(fields: [userId], references: [id])
+  game           Game             @relation(fields: [gameId], references: [id])
+}
+
+model ShoppingCart {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  gameId         Int
+  quantity       Int
+  user           User             @relation(fields: [userId], references: [id])
+  game           Game             @relation(fields: [gameId], references: [id])
+}
+
+model Transaction {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  orderId        Int @unique
+  amount         Float
+  paymentMethod  String
+  status         String
+  createdAt      DateTime         @default(now())
+  user           User             @relation(fields: [userId], references: [id])
+  order          Order            @relation(fields: [orderId], references: [id])
+}
+
+model GameKey {
+  id             Int              @id @default(autoincrement())
+  orderItemId    Int @unique
+  key            String           @unique
+  isRedeemed     Boolean          @default(false)
+  orderItem      OrderItems       @relation(fields: [orderItemId], references: [id])
+
+  User User[]
+}
+
+model UserProfile {
+  id             Int              @id @default(autoincrement())
+  userId         Int              @unique
+  profilePicture String?
+  bio            String?
+  socialLinks    Json?
+  user           User             @relation(fields: [userId], references: [id])
+}
+
+
+
+model Notification {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  type           String
+  message        String
+  isRead         Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  user           User             @relation(fields: [userId], references: [id])
+}
+
+model Subscription {
+  id             Int              @id @default(autoincrement())
+  userId         Int
+  planName       String
+  startDate      DateTime
+  endDate        DateTime
+  status         String
+  user           User             @relation(fields: [userId], references: [id])
+}
+
+model Discount {
+  id             Int              @id @default(autoincrement())
+  code           String           @unique
+  description    String?
+  discountPercentage Float
+  validFrom      DateTime
+  validUntil     DateTime
+  isActive       Boolean          @default(true)
+}
